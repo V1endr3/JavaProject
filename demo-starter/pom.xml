@@ -6,14 +6,14 @@
 
     <parent>
         <groupId>org.example</groupId>
-        <artifactId>java-project</artifactId>
+        <artifactId>java-project.all</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>java-project-starter</artifactId>
+    <name>demo-starter</name>
     <packaging>jar</packaging>
-    <version>${project.version}</version>
 
     <dependencies>
         <dependency>
