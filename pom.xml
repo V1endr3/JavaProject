@@ -12,14 +12,13 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <revision>1.0.0-SNAPSHOT</revision>
-        <spring.boot.version>3.2.2</spring.boot.version>
-        <lombok.version>1.18.30</lombok.version>
     </properties>
 
     <modules>
         <module>COLA4</module>
         <module>MyBatis</module>
+        <module>TemporalIO</module>
+        <module>ShardingSphere</module>
+        <module>Retrofit2</module>
     </modules>
 </project>
