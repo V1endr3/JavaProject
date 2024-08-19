@@ -20,5 +20,6 @@
         <module>TemporalIO</module>
         <module>ShardingSphere</module>
         <module>Retrofit2</module>
+        <module>Camel</module>
     </modules>
 </project>
