@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<camel>
+
+    <restConfiguration bindingMode="auto" component="jetty" port="18080"/>
+
+    <bean name="testdb" type="org.apache.commons.dbcp2.BasicDataSource">
+        <properties>
+            <property key="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+            <property key="url" value="jdbc:mysql://127.0.0.1:3306/test"/>
+            <property key="username" value="test"/>
+            <property key="password" value="test"/>
+        </properties>
+    </bean>
+
+    <rest path="/say">
+        <get path="/hello">
+            <to uri="direct:hello" pattern="InOut"/>
+        </get>
+    </rest>
+
+    <route>
+        <from uri="direct:hello"/>
+        <transform>
+            <simple>select id,name,descr from eip_envt where name like :?name order by name</simple>
+        </transform>
+        <to uri="jdbc:testdb?outputType=SelectList&amp;useHeadersAsParameters=true"/>
+        <split aggregationStrategy="#class:org.example.aggregate.ApplyConcreteStrategy">
+            <simple>${body}</simple>
+            <setHeader name="EipDestEndpoint">
+                <constant>log://record</constant>
+            </setHeader>
+            <filter>
+                <simple>${body["name"]} == "test0801"</simple>
+                <to uri="log:record"/>
+            </filter>
+        </split>
+        <!--        <marshal>-->
+        <!--            <json library="Jackson" useList="true"/>-->
+        <!--        </marshal>-->
+        <!--        <transform>-->
+        <!--            <jsonpath>$[?(@.name == "test0801")]</jsonpath>-->
+        <!--        </transform>-->
+
+        <!--        <to uri="log:record"/>-->
+    </route>
+</camel>

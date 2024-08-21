@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<camel>
+    <restConfiguration host="0.0.0.0" port="18080" component="jetty" bindingMode="auto"/>
+    <rest path="/hello">
+        <post path="/*">
+            <to uri="direct:start"/>
+        </post>
+    </rest>
+
+    <route>
+        <from uri="direct:start"/>
+        <setHeader name="appMethod">
+            <simple>${header.CamelHttpUri}</simple>
+        </setHeader>
+        <setHeader name="appContent">
+            <simple>${body}</simple>
+        </setHeader>
+        <removeHeader name="appId"/>
+        <process ref="#class:org.example.bean.SignatureBean"/>
+        <to uri="direct:trans"/>
+    </route>
+    <route>
+        <from uri="direct:trans"/>
+        <to uri="rest://get:anything?host=127.0.0.1:8088&amp;producerComponentName=http&amp;bindingMode=auto&amp;bridgeEndpoint=true"/>
+    </route>
+</camel>
