@@ -5,10 +5,10 @@
 
     <bean name="testdb" type="org.apache.commons.dbcp2.BasicDataSource">
         <properties>
-            <property key="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-            <property key="url" value="jdbc:mysql://127.0.0.1:3306/test"/>
-            <property key="username" value="test"/>
-            <property key="password" value="test"/>
+            <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://127.0.0.1:3306/demo"/>
+            <property name="username" value="demo"/>
+            <property name="password" value="demo"/>
         </properties>
     </bean>
 
@@ -21,7 +21,7 @@
     <route>
         <from uri="direct:hello"/>
         <transform>
-            <simple>select id,name,descr from eip_envt where name like :?name order by name</simple>
+            <simple>select id,name from test where name like :?name order by name</simple>
         </transform>
         <to uri="jdbc:testdb?outputType=SelectList&amp;useHeadersAsParameters=true"/>
         <split aggregationStrategy="#class:org.example.aggregate.ApplyConcreteStrategy">

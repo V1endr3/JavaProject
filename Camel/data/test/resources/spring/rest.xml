@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <restConfiguration bindingMode="auto" component="jetty" port="8080"/>
+    <rest path="/say">
+        <get path="/hello">
+            <to uri="direct:hello"/>
+        </get>
+        <post path="/bye">
+            <to uri="direct:bye"/>
+        </post>
+    </rest>
+
+    <endpoint id="testdb" uri="bean:dataSource"/>
+
+    <route>
+        <from uri="direct:hello"/>
+        <setHeader name="name">
+            <simple>%${header.name}%</simple>
+        </setHeader>
+        <setBody>
+            <constant>select id,name from test where name like :?name order by name</constant>
+        </setBody>
+        <to uri="spring-jdbc:dataSource?outputType=SelectList&amp;useHeadersAsParameters=true"/>
+        <to uri="log:record"/>
+    </route>
+
+    <route>
+        <from uri="direct:bye"/>
+        <transform>
+            <simple>${body}</simple>
+        </transform>
+    </route>
+</routes>

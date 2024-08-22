@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!--    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">-->
+    <!--    <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>-->
+    <!--    <property name="url" value="jdbc:mysql://127.0.0.1:3306/demo"/>-->
+    <!--    <property name="username" value="demo"/>-->
+    <!--    <property name="password" value="demo"/>-->
+    <!--    </bean>-->
+    <camelContext id="demo-rest" xmlns="http://camel.apache.org/schema/spring">
+        <!--        <restConfiguration bindingMode="auto" component="jetty" port="18080"/>-->
+
+        <!--        <rest path="/kakfa" produces="application/json">-->
+        <!--            <post path="/produce">-->
+        <!--                <to uri="direct:produce"/>-->
+        <!--            </post>-->
+        <!--        </rest>-->
+
+        <route>
+            <from uri="kafka:camel_test_0001?brokers=127.0.0.1:6667&amp;groupId=camel_test_0001&amp;seekTo=BEGINNING"/>
+            <!--            <transform>-->
+            <!--                <simple>-->
+            <!--                    INSERT INTO `autotest`.`mysql_student_1` (`id_`, `xm_`) VALUES ("${jsonpath($.id)}", "${jsonpath($.name)}");-->
+            <!--                </simple>-->
+            <!--            </transform>-->
+
+            <to uri="log:consume"/>
+            <!--            <to uri="jdbc://dataSource"/>-->
+            <!--            <to uri="log:after-insert"/>-->
+        </route>
+
+        <!--        <route>-->
+        <!--            <from uri="direct:produce"/>-->
+        <!--                    <to uri="kafka:camel_test_0001?brokers=127.0.0.1:6667&amp;groupId=camel_test_0001"/>-->
+        <!--            <to uri="log:http-request"/>-->
+        <!--        </route>-->
+
+    </camelContext>
+</beans>
