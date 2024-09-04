@@ -7,18 +7,12 @@
 
     <camelContext id="demo-rest" xmlns="http://camel.apache.org/schema/spring">
 
-        <restConfiguration bindingMode="auto" component="jetty" port="18080"/>
-
+        <restConfiguration bindingMode="auto" component="jetty" port=""/>
         <rest path="/greetings" produces="application/json">
             <get path="/hello">
                 <to uri="direct:hello"/>
             </get>
         </rest>
-
-        <route>
-            <from uri="direct:hello"/>
-            <to uri="rest:get:anything?host=127.0.0.1:8088&amp;bridgeEndpoint=true&amp;producerComponentName=http"/>
-        </route>
 
     </camelContext>
 </beans>

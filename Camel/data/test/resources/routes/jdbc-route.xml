@@ -34,9 +34,9 @@
                 <to uri="log:record"/>
             </filter>
         </split>
-        <!--        <marshal>-->
-        <!--            <json library="Jackson" useList="true"/>-->
-        <!--        </marshal>-->
+        <marshal>
+            <json library="Jackson"/>
+        </marshal>
         <!--        <transform>-->
         <!--            <jsonpath>$[?(@.name == "test0801")]</jsonpath>-->
         <!--        </transform>-->

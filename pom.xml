@@ -21,5 +21,7 @@
         <module>ShardingSphere</module>
         <module>Retrofit2</module>
         <module>Camel</module>
+        <module>Nomad</module>
+        <module>FreeMarker</module>
     </modules>
 </project>
