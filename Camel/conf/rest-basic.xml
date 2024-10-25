@@ -16,7 +16,8 @@
 
         <route>
             <from uri="direct:hello"/>
-            <to uri="rest:post:anything?host=httpbin.org:80"/>
+            <to uri="rest:post:anything?host=httpbin.org:80&amp;bridgeEndpoint=true"/>
+            <unmarshal><json/></unmarshal>
             <to uri="log:hello-log"/>
         </route>
 
