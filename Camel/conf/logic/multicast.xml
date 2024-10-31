@@ -14,7 +14,7 @@
             </setBody>
             <process ref="#class:org.example.debugger.DebuggerProcessor"/>
             <to uri="log:multicast-pre"/>
-            <multicast synchronous="true" shareUnitOfWork="true">
+            <multicast synchronous="true" shareUnitOfWork="true" stopOnException="false">
                 <step>
                     <setBody>
                         <simple>${date:now:yyyyMMddHHmmss}: ${stepId}: [${threadId}, ${threadName}] ==> ${body}</simple>
